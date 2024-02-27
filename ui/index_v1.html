@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3bit-computer</title>
+    <style>
+body{
+  background-color: black;
+  color: lightgreen;
+  font-family:monospace;
+}
+
+.screen{
+  font-size: 32pt;
+  border: solid white 1px;
+}
+.caret {
+  background-color: lightgreen;
+  color: black;
+}
+
+.run{
+  font-size: 18pt;
+}
+
+.program {
+  width: 600px;
+  font-size: 18pt;
+}
+
+    </style>
+</head>
+<body>
+    <div>
+        <pre><span class="screen">        </span></pre>
+    </div>
+    <input class="program" type="text"></input>
+    <button class="run" onclick="start()">Run</button>
+    <script>
+let progInput = document.getElementsByClassName("program")[0];
+let screenEl = document.getElementsByClassName("screen")[0];
+let vm = {screen: [0,0,0,0,0,0,0,0], caret:0, sel:-1};
+const urlParams = new URLSearchParams(window.location.search);
+let prog = urlParams.get('prog') || "";
+let ip = -1;
+if (prog.length > 0) 
+    progInput.value = prog;
+
+updateScreen(vm);
+
+function step(){
+    if (ip < 0){
+        vm = {screen: [0,0,0,0,0,0,0,0], caret:0, sel:-1};
+        prog = progInput.value;
+        ip = 0;
+    }
+    if (ip >= prog.length) {
+        urlParams.set('prog', progInput.value);
+        if (history.replaceState) {
+            var url = window.location.protocol + "//" + window.location.host + window.location.pathname + '?' + urlParams.toString();
+            window.history.replaceState({},'',url);
+        }
+        ip = -1;
+        return;
+    }
+    let cmd = prog[ip];
+    execute(vm, cmd);
+    updateScreen(vm);
+    ip++;
+    setTimeout(step, 300);
+}
+
+function execute(vm, c){
+    const len = vm.screen.length;
+    if (c == 'R') vm.caret = (vm.caret + 1) % len;
+    if (c == 'L') vm.caret = (vm.caret + len - 1) % len;
+    if (c == '+' || c == 'I')
+        for (let pos of selection(vm))
+            vm.screen[pos]++;
+    if (c == '-' || c == 'D')
+        for (let pos of selection(vm))
+            vm.screen[pos]--;
+    if (c == '*' || c == 'M')
+        for (let pos of selection(vm))
+            vm.screen[pos] *= 2;
+    if (c == 'S') vm.sel = vm.caret;
+    if (c == 'C') vm.sel = -1;
+}
+
+function selection(vm){
+    if (vm.sel < 0) return [vm.caret];
+    let res = [];
+    let i = vm.sel;
+    while (i != vm.caret){
+        res.push(i);
+        i = (i + 1) % vm.screen.length;
+    }
+    res.push(vm.caret);
+    return res;
+}
+
+function getSymbol(code){
+    if (code == 0) return " ";
+    if (code > 26) return "▉";
+    return String.fromCharCode('A'.charCodeAt(0) + code - 1);
+}
+
+function updateScreen(vm){
+    let s = "";
+    for(let i = 0; i < vm.screen.length; i++){
+        if (i == vm.sel || vm.sel <0 && i == vm.caret) 
+            s += "<span class='caret'>";
+        s += "" + getSymbol(vm.screen[i]);
+        if (i == vm.caret) 
+            s += "</span>";
+    }
+    
+    screenEl.innerHTML = s;
+}
+
+function start(){
+    if (ip < 0)
+        step();
+}
+
+function changeprog(){
+
+}
+    </script>
+</body>
+</html>

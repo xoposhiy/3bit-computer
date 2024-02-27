@@ -1,0 +1,15 @@
+C:\work\progday23\progday23\bin\Debug\net7.0\progday23.exe
+C:\work\progday23\progday23\bin\Debug\net7.0\progday23.deps.json
+C:\work\progday23\progday23\bin\Debug\net7.0\progday23.runtimeconfig.json
+C:\work\progday23\progday23\bin\Debug\net7.0\progday23.dll
+C:\work\progday23\progday23\bin\Debug\net7.0\progday23.pdb
+C:\work\progday23\progday23\obj\Debug\net7.0\progday23.csproj.AssemblyReference.cache
+C:\work\progday23\progday23\obj\Debug\net7.0\progday23.GeneratedMSBuildEditorConfig.editorconfig
+C:\work\progday23\progday23\obj\Debug\net7.0\progday23.AssemblyInfoInputs.cache
+C:\work\progday23\progday23\obj\Debug\net7.0\progday23.AssemblyInfo.cs
+C:\work\progday23\progday23\obj\Debug\net7.0\progday23.csproj.CoreCompileInputs.cache
+C:\work\progday23\progday23\obj\Debug\net7.0\progday23.dll
+C:\work\progday23\progday23\obj\Debug\net7.0\refint\progday23.dll
+C:\work\progday23\progday23\obj\Debug\net7.0\progday23.pdb
+C:\work\progday23\progday23\obj\Debug\net7.0\progday23.genruntimeconfig.cache
+C:\work\progday23\progday23\obj\Debug\net7.0\ref\progday23.dll
